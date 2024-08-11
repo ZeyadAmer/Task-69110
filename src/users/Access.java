@@ -13,8 +13,13 @@ public class Access {
         creators = new ArrayList<>();
         allQuizzes = new ArrayList<>();
     }
-    public void homePage(){
+    public void homePage(ArrayList<Player> players,ArrayList<Creator> creators,ArrayList<Quiz> allQuizzes){
+        this.players = players;
+        this.creators = creators;
+        this.allQuizzes = allQuizzes;
+        System.out.println(creators.size());
         String userChoice = "0";
+        System.out.println(allQuizzes.size());
         boolean flag = false;
         Scanner myObj = new Scanner(System.in);
         System.out.println("Hello, \n" +
@@ -53,12 +58,18 @@ public class Access {
             if(accessOption == 1){
                 if (userChoice.equals("1")) {
                     while(!flag) {
+                        System.out.println("Type back to main menu and anything to continue");
+                        userChoice = myObj.nextLine();
+                        if(userChoice.equals("back")) {
+                            homePage(players,creators,allQuizzes);
+                        }
                         System.out.println("Please enter your username");
                         userName = myObj.nextLine();
                         System.out.println("Please enter your password");
                         password = myObj.nextLine();
                         player = loginPlayer(userName, password);
                         if(player != null ){
+                            player.homePage(players,creators,allQuizzes);
                             flag = true;
                         }
 
@@ -70,6 +81,7 @@ public class Access {
                     password = myObj.nextLine();
                     addPlayer(userName, password);
                     player = players.get(players.size()-1);
+                    player.homePage(players,creators,allQuizzes);
                     flag = true;
 
                 } else {
@@ -79,14 +91,20 @@ public class Access {
             else if(accessOption == 2){
                 if (userChoice.equals("1")) {
                     while(!flag) {
+                        System.out.println("Type back to main menu and anything to continue");
+                        userChoice = myObj.nextLine();
+                        if(userChoice.equals("back")) {
+                            homePage(players,creators,allQuizzes);
+                        }
                         System.out.println("Please enter your username");
                         userName = myObj.nextLine();
+
                         System.out.println("Please enter your password");
                         password = myObj.nextLine();
                         creator = loginCreator(userName, password);
                         if(creator != null ){
                             flag = true;
-                            creator.homePage(allQuizzes);
+                            creator.homePage(players,creators,allQuizzes);
                             System.out.print(creator.name);
                         }
 
@@ -100,7 +118,7 @@ public class Access {
                     creator = creators.get(creators.size()-1);
 
 
-                    creator.homePage(allQuizzes);
+                    creator.homePage(players,creators,allQuizzes);
                     flag = true;
                 } else {
                     System.out.println("Please choose 1 or 2");
@@ -121,6 +139,7 @@ public class Access {
     }
     public Player loginPlayer(String username, String password) {
         for (Player player : players) {
+            System.out.println(player.name + " " + player.password);
             if(player.name.equals(username) && player.password.equals(password)) {
                 System.out.println("Logged in");
                 return player;
@@ -131,6 +150,7 @@ public class Access {
     }
     public Creator loginCreator(String username, String password) {
         for (Creator creator : creators) {
+
             if(creator.name.equals(username) && creator.password.equals(password)){
                 System.out.println("Logged in" );
                 return creator;

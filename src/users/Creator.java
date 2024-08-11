@@ -15,7 +15,7 @@ public class Creator {
         quizzesList = new ArrayList<Quiz>();
     }
 
-    public void createQuiz(ArrayList<Quiz> allQuizzes){
+    public void createQuiz(ArrayList<Player> players,ArrayList<Creator> creators,ArrayList<Quiz> allQuizzes){
         Scanner myObj = new Scanner(System.in);
         System.out.println("Please enter quiz name");
         String name = myObj.nextLine();
@@ -34,7 +34,7 @@ public class Creator {
             }else{
                 quizzesList.add(quiz);
                 allQuizzes.add(quiz);
-                homePage(allQuizzes);
+                homePage(players,creators,allQuizzes);
                 flag = true;
             }
 
@@ -101,7 +101,7 @@ public class Creator {
         current.questions.add(question1);
     }
 
-    public void homePage(ArrayList<Quiz> allQuizzes){
+    public void homePage(ArrayList<Player> players,ArrayList<Creator> creators,ArrayList<Quiz> allQuizzes){
         Scanner myObj = new Scanner(System.in);
         System.out.println("1- show quizzes\n" +
                 "2- add question to quiz\n" +
@@ -112,33 +112,34 @@ public class Creator {
             case 1:
                 if(quizzesList.isEmpty()){
                     System.out.println("No quizzes yet");
-                    homePage(allQuizzes);
+                    homePage(players,creators,allQuizzes);
                     break;
                 }else{
                     for(Quiz quiz : quizzesList){
                          System.out.println(quiz.name);
                     }
-                    homePage(allQuizzes);
+                    homePage(players,creators,allQuizzes);
                 }
             case 2:
                 System.out.println("Enter quiz name: ");
                 for(Quiz quiz : quizzesList){
                     if(quiz.name.equals(name)){
                         addQuestion(quiz);
-                        homePage(allQuizzes);
+                        homePage(players,creators,allQuizzes);
                     }else
                         System.out.println("quiz not found");
+                    homePage(players,creators,allQuizzes);
                 }
 
             case 3:
-                createQuiz(allQuizzes);
-                homePage(allQuizzes);
+                createQuiz(players,creators,allQuizzes);
+                homePage(players,creators,allQuizzes);
             case 4:
                 Access access = new Access();
-                access.homePage();
+                access.homePage(players,creators,allQuizzes);
 
             default:
-                homePage(allQuizzes);
+                homePage(players,creators,allQuizzes);
                 break;
 
         }
