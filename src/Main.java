@@ -1,6 +1,7 @@
 import Engine.Question;
 import Engine.Quiz;
 import users.Access;
+import users.Creator;
 import users.Player;
 
 import java.util.ArrayList;
@@ -8,85 +9,10 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static int homePage(){
-        String userChoice = "0";
-        boolean flag = false;
-        Scanner myObj = new Scanner(System.in);
-        System.out.println("Hello, \n" +
-                "Welcome to quiz mania");
-        System.out.println("1- Player \n" +
-                "2- Creator");
 
-        while(!flag) {
-            userChoice = myObj.nextLine();
-            if (userChoice.equals("1")) {
-                flag = true;
 
-            } else if (userChoice.equals("2")) {
-                flag = true;
 
-            } else {
-                System.out.println("Please choose 1 or 2");
-            }
-        }
-        return Integer.parseInt(userChoice);
-    }
-    public static int userType(int accessOption, Access access){
-        String userChoice = "0";
-        String userName;
-        String password;
-        boolean flag = false;
-        Scanner myObj = new Scanner(System.in);
-        System.out.println("1- Login \n" +
-                "2- Register");
-
-        while(!flag) {
-            userChoice = myObj.nextLine();
-            if(accessOption == 1){
-                if (userChoice.equals("1")) {
-                    while(!flag) {
-                        System.out.println("Please enter your username");
-                        userName = myObj.nextLine();
-                        System.out.println("Please enter your password");
-                        password = myObj.nextLine();
-                        flag = access.loginPlayer(userName, password);
-                    }
-                } else if (userChoice.equals("2")) {
-                    System.out.println("Please enter your username");
-                    userName = myObj.nextLine();
-                    System.out.println("Please enter your password");
-                    password = myObj.nextLine();
-                    access.addPlayer(userName, password);
-
-                } else {
-                    System.out.println("Please choose 1 or 2");
-                }
-            }
-            else if(accessOption == 2){
-                if (userChoice.equals("1")) {
-                    while(!flag) {
-                        System.out.println("Please enter your username");
-                        userName = myObj.nextLine();
-                        System.out.println("Please enter your password");
-                        password = myObj.nextLine();
-                        flag = access.loginCreator(userName, password);
-                    }
-                } else if (userChoice.equals("2")) {
-                    System.out.println("Please enter your username");
-                    userName = myObj.nextLine();
-                    System.out.println("Please enter your password");
-                    password = myObj.nextLine();
-                    access.addPlayer(userName, password);
-
-                } else {
-                    System.out.println("Please choose 1 or 2");
-                }
-            }
-        }
-        return Integer.parseInt(userChoice);
-    }
-
-    public void presetQuiz(Quiz quizzes){
+    public static void presetQuiz(Quiz quizzes){
         ArrayList<String> options1 = new ArrayList<>();
         options1.add("Paris");
         options1.add("London");
@@ -128,10 +54,15 @@ public class Main {
         quizzes.addQuestion(q5);
     }
     public static void main(String[] args) {
-        ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
+
         Access access = new Access();
-        int accessOption = homePage();
-        userType(accessOption, access);
+        Quiz preSet = new Quiz("PreSet");
+        presetQuiz(preSet);
+        access.allQuizzes.add(preSet);
+
+        access.homePage();
+
+
 
     }
 }
