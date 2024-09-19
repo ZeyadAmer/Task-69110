@@ -1,5 +1,6 @@
 package Engine;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Quiz {
@@ -16,26 +17,44 @@ public class Quiz {
         boolean flag = false;
         String userChoice;
         String question;
-        int answer;
+        int answer = -1;
         ArrayList<String> options = new ArrayList<>();
         System.out.println("Enter question: ");
         question = myObj.nextLine();
-        int counter = 0;
-        while(!flag){
-            counter++;
+        while (!flag) {
             System.out.println("1- add option\n" +
                     "2- finish ");
             userChoice = myObj.nextLine();
             if (userChoice.equals("1")) {
-                String option = counter + "-"+ myObj.nextLine();
+                System.out.println("Enter option: ");
+                String option = myObj.nextLine();
                 options.add(option);
-            }else flag = true;
+            } else if(userChoice.equals("2")){
+                if(options.isEmpty()){
+                    System.out.println("Enter more options please");
+                }else flag = true;
+            }
+            else flag = true;
         }
         System.out.println("Enter correct option number: ");
-        answer = myObj.nextInt();
-        Question question1 = new Question(question,answer,options);
+        while (answer < 0 || answer > options.size()){
+            try{
+                answer = myObj.nextInt();
+                if(answer < 0 || answer > options.size()){
+                    System.out.println("invalid option number");
+                }
+            }
+            catch (InputMismatchException e){
+                System.out.println("invalid option number");
+                myObj.next();
+            }
+        }
+
+
+        Question question1 = new Question(question, answer, options);
 
         questions.add(question1);
+
     }
     public void addQuestion(Question question){
         questions.add(question);

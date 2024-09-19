@@ -2,6 +2,7 @@ package users;
 import Engine.*;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Creator extends User {
@@ -28,8 +29,14 @@ public class Creator extends User {
             if (userChoice.equals("1")) {
                 quiz.addQuestion();
 
-            }else{
-                quizzesList.add(quiz);
+            } else if (userChoice.equals("2")) {
+                if(!quiz.questions.isEmpty())
+                    flag = true;
+                else
+                    System.out.println("Please enter at least one question");
+
+            } else{
+                this.quizzesList.add(quiz);
                 allQuizzes.add(quiz);
                 homePage(players,creators,allQuizzes);
                 flag = true;
@@ -38,30 +45,7 @@ public class Creator extends User {
         }
 
     }
-    public void addQuestion(Quiz quiz) {
-        Scanner myObj = new Scanner(System.in);
-        boolean flag = false;
-        String userChoice;
-        String question;
-        int answer;
-        ArrayList<String> options = new ArrayList<>();
-        System.out.println("Enter question: ");
-        question = myObj.nextLine();
-        while (!flag) {
-            System.out.println("1- add option\n" +
-                    "2- finish ");
-            userChoice = myObj.nextLine();
-            if (userChoice.equals("1")) {
-                String option = myObj.nextLine();
-                options.add(option);
-            } else flag = true;
-        }
-        System.out.println("Enter correct option number: ");
-        answer = myObj.nextInt();
-        Question question1 = new Question(question, answer, options);
 
-        quiz.questions.add(question1);
-    }
 
     public void homePage(ArrayList<Player> players,ArrayList<Creator> creators,ArrayList<Quiz> allQuizzes){
         Scanner myObj = new Scanner(System.in);
@@ -69,9 +53,9 @@ public class Creator extends User {
                 "2- add question to quiz\n" +
                 "3- Create new quiz\n" +
                 "4- logout");
-        int choice = myObj.nextInt();
+        String choice = myObj.nextLine();
         switch(choice){
-            case 1:
+            case "1":
                 if(quizzesList.isEmpty()){
                     System.out.println("No quizzes yet");
                     homePage(players,creators,allQuizzes);
@@ -82,25 +66,34 @@ public class Creator extends User {
                     }
                     homePage(players,creators,allQuizzes);
                 }
-            case 2:
+            case "2":
                 System.out.println("Enter quiz name: ");
+                String nameEntered = myObj.nextLine();
+                boolean flag = false;
                 for(Quiz quiz : quizzesList){
-                    if(quiz.name.equals(name)){
-                        addQuestion(quiz);
+                    if(quiz.name.equals(nameEntered)){
+                        quiz.addQuestion();
                         homePage(players,creators,allQuizzes);
-                    }else
-                        System.out.println("quiz not found");
-                    homePage(players,creators,allQuizzes);
-                }
+                        flag = true;
+                        break;
+                    }
 
-            case 3:
+                }
+                if(!flag){
+                    System.out.println("quiz not found");
+                    homePage(players, creators, allQuizzes);
+                }
+                break;
+
+            case "3":
                 createQuiz(players,creators,allQuizzes);
-                homePage(players,creators,allQuizzes);
-            case 4:
+                break;
+            case "4":
                 Access access = new Access();
                 access.homePage(players,creators,allQuizzes);
-
+                break;
             default:
+                System.out.println("Please choose correct option");
                 homePage(players,creators,allQuizzes);
                 break;
 

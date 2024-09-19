@@ -16,9 +16,7 @@ public class Access {
         this.players = players;
         this.creators = creators;
         this.allQuizzes = allQuizzes;
-        System.out.println(creators.size());
         String userChoice = "0";
-        System.out.println(allQuizzes.size());
         boolean flag = false;
         Scanner myObj = new Scanner(System.in);
         System.out.println("Hello, \n" +

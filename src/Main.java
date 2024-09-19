@@ -1,11 +1,7 @@
 import Engine.Question;
 import Engine.Quiz;
 import users.Access;
-import users.Creator;
-import users.Player;
-
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
 
