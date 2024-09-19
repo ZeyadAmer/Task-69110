@@ -4,16 +4,12 @@ import Engine.Quiz;
 import Engine.Scores;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-public class Player {
-    public String name;
-    public String password;
+public class Player extends User  {
     public ArrayList<Scores> scores;
 
     public Player(String name, String password) {
-        this.name = name;
-        this.password = password;
-        this.scores = new ArrayList<Scores>();
+        super(name, password);
+        this.scores = new ArrayList<>();
     }
 
     public void homePage(ArrayList<Player> players,ArrayList<Creator> creators,ArrayList<Quiz> allQuizzes){

@@ -9,7 +9,6 @@ public class Question {
         this.question = question;
         this.answer = answer;
         this.options = options;
-
     }
 
 }

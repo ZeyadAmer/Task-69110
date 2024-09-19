@@ -20,12 +20,14 @@ public class Quiz {
         ArrayList<String> options = new ArrayList<>();
         System.out.println("Enter question: ");
         question = myObj.nextLine();
+        int counter = 0;
         while(!flag){
+            counter++;
             System.out.println("1- add option\n" +
                     "2- finish ");
             userChoice = myObj.nextLine();
             if (userChoice.equals("1")) {
-                String option = myObj.nextLine();
+                String option = counter + "-"+ myObj.nextLine();
                 options.add(option);
             }else flag = true;
         }
