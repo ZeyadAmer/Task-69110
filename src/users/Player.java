@@ -3,6 +3,7 @@ import Engine.Question;
 import Engine.Quiz;
 import Engine.Scores;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Player extends User  {
     public ArrayList<Scores> scores;
@@ -59,13 +60,27 @@ public class Player extends User  {
             for(String option : question.options){
                 System.out.println(option);
             }
+            boolean flag = false;
+            while(!flag){
+                try{
+                    int choice = myObj.nextInt();
+                    if(choice < 1 || choice > question.options.size())
+                        throw new InputMismatchException();
+                    if(choice == question.answer){
+                        System.out.println("Correct answer");
+                        score++;
+                    }else
+                        System.out.println("Wrong answer\nThe right answer is " + question.answer);
+                    flag = true;
+                }
+                catch (InputMismatchException e){
+                    System.out.println("please enter valid answer");
+                    myObj.next();
+                }
+            }
 
-            int choice = myObj.nextInt();
-            if(choice == question.answer){
-                System.out.println("Correct answer");
-                score++;
-            }else
-                System.out.println("Wrong answer\nThe right answer is " + question.answer);
+
+
         }
         scores.add(new Scores(quiz.name, score));
     }
